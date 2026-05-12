@@ -408,8 +408,9 @@ body {
 .todo {
   display: flex;
   align-items: center;
-  gap: .65rem;
-  padding: .75rem .9rem;
+  gap: .75rem;
+  padding: .65rem .8rem;
+  min-height: 56px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -434,6 +435,7 @@ body {
 /* Heart-shaped checkbox */
 .todo__check {
   flex: none;
+  align-self: center;
   width: 32px; height: 32px;
   display: grid; place-items: center;
   background: var(--cream-2);
@@ -442,6 +444,12 @@ body {
   color: var(--pink-500);
   cursor: pointer;
   transition: background .2s var(--easing), border-color .2s var(--easing), transform .2s var(--easing);
+}
+.todo__heart {
+  display: block;
+  /* The heart shape's visual mass sits slightly above its bounding box centre;
+     a half-pixel nudge centres it optically inside the circle. */
+  transform: translateY(0.5px);
 }
 .todo__check:hover {
   background: #FFE7EE;
@@ -469,11 +477,14 @@ body {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: .15rem;
+  justify-content: center;
+  gap: .25rem;
+  min-height: 32px; /* match check button so single-line items always centre */
 }
 .todo__text {
   margin: 0;
   font-weight: 600;
+  line-height: 1.3;
   color: var(--text);
   word-break: break-word;
   transition: color .2s var(--easing), opacity .2s var(--easing);
@@ -500,11 +511,11 @@ body {
   display: inline-flex;
   align-items: center;
   gap: .25rem;
-  margin-top: .15rem;
   padding: .15rem .55rem;
-  font-size: .7rem;
+  font-size: .68rem;
   font-weight: 800;
   letter-spacing: .04em;
+  line-height: 1.4;
   border-radius: var(--radius-pill);
   text-transform: uppercase;
 }
@@ -515,7 +526,10 @@ body {
 
 /* Actions */
 .todo__actions {
+  flex: none;
+  align-self: center;
   display: flex;
+  align-items: center;
   gap: .15rem;
   opacity: 0;
   transform: translateX(4px);
@@ -530,7 +544,7 @@ body {
   .todo__actions { opacity: 1; transform: none; }
 }
 .icon-btn {
-  width: 30px; height: 30px;
+  width: 32px; height: 32px;
   display: grid; place-items: center;
   background: transparent;
   color: var(--muted);
@@ -539,6 +553,7 @@ body {
   cursor: pointer;
   transition: background .15s var(--easing), color .15s var(--easing);
 }
+.icon-btn svg { display: block; }
 .icon-btn:hover { background: var(--cream); color: var(--brown-2); }
 .todo__del-btn:hover { background: #FFE0E0; color: #C75252; }
 
