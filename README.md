@@ -15,7 +15,7 @@ Use it to practice or demonstrate:
 The app itself is intentionally minimal so the **process** stays front and center.
 
 ## Getting started
-
+ 
 1. Clone the repository.
 2. Install dependencies:
 
