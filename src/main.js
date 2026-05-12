@@ -146,6 +146,49 @@ function pickEncouragement(pct, total, doneCount) {
   return encouragements[0];
 }
 
+const DONUT = "🍩";
+
+/**
+ * Tiny burst of donut emoji from a completed task’s checkbox (skipped if reduced motion).
+ * @param {number} cx Viewport X of burst origin.
+ * @param {number} cy Viewport Y of burst origin.
+ */
+function spawnDonutCelebration(cx, cy) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const layer = document.createElement("div");
+  layer.className = "donut-burst";
+  layer.setAttribute("aria-hidden", "true");
+
+  const count = 7;
+  for (let i = 0; i < count; i++) {
+    const base = -Math.PI / 2;
+    const spread = (i / (count - 1 || 1) - 0.5) * 1.35 + (Math.random() * 0.35 - 0.175);
+    const angle = base + spread;
+    const dist = 38 + Math.random() * 34;
+    const tx = Math.cos(angle) * dist;
+    const ty = Math.sin(angle) * dist;
+    const spin = (Math.random() - 0.5) * 140;
+    const delay = i * 0.028 + Math.random() * 0.04;
+    const size = 0.95 + Math.random() * 0.45;
+
+    const p = document.createElement("span");
+    p.className = "donut-burst__particle";
+    p.textContent = DONUT;
+    p.style.setProperty("--tx", `${tx.toFixed(1)}px`);
+    p.style.setProperty("--ty", `${ty.toFixed(1)}px`);
+    p.style.setProperty("--spin", `${spin.toFixed(1)}deg`);
+    p.style.setProperty("--delay", `${delay.toFixed(3)}s`);
+    p.style.setProperty("--size", `${size.toFixed(2)}rem`);
+    p.style.left = `${cx}px`;
+    p.style.top = `${cy}px`;
+    layer.appendChild(p);
+  }
+
+  document.body.appendChild(layer);
+  window.setTimeout(() => layer.remove(), 950);
+}
+
 /* ─── Rendering ─────────────────────────────────────── */
 function render() {
   // Counts
@@ -261,13 +304,18 @@ list.addEventListener("click", (e) => {
   if (!todo) return;
 
   if (target.closest(".todo__check")) {
-    todo.done = !todo.done;
-    li.dataset.done = String(todo.done);
     const check = /** @type {HTMLButtonElement} */ (li.querySelector(".todo__check"));
-    check.setAttribute("aria-pressed", String(todo.done));
+    const becomingDone = !todo.done;
+    let burstAt = null;
+    if (becomingDone) {
+      const r = check.getBoundingClientRect();
+      burstAt = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    }
+    todo.done = !todo.done;
     persist();
     // Re-render to update progress + counts (item stays unless filter hides it)
     render();
+    if (burstAt) spawnDonutCelebration(burstAt.x, burstAt.y);
     return;
   }
 

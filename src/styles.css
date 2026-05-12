@@ -625,6 +625,39 @@ body {
   font-weight: 800;
 }
 
+/* ─── Donut completion burst (vanilla micro-interaction) ─ */
+.donut-burst {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 8;
+  overflow: visible;
+}
+.donut-burst__particle {
+  position: fixed;
+  left: 0;
+  top: 0;
+  font-size: var(--size, 1.1rem);
+  line-height: 1;
+  will-change: transform, opacity;
+  animation: donutBurst 0.78s var(--easing) var(--delay, 0s) forwards;
+}
+@keyframes donutBurst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.15) rotate(-18deg);
+  }
+  12% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12) rotate(6deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--tx, 0px)), calc(-50% + var(--ty, 0px))) scale(0.65)
+      rotate(var(--spin, 24deg));
+  }
+}
+
 /* ─── Focus visibility ───────────────────────────────── */
 :focus-visible {
   outline: 2px solid var(--pink-500);
