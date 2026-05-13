@@ -33,12 +33,12 @@ The app itself is intentionally minimal so the **process** stays front and cente
 
 ## Scripts
 
-| Command            | Description                    |
-| ------------------ | ------------------------------ |
-| `npm run dev`      | Start the Vite dev server      |
-| `npm run build`    | Production build to `dist/`   |
-| `npm run preview`  | Serve the production build     |
-| `npm run lint`     | Run ESLint on the project      |
+| Command           | Description                 |
+| ----------------- | --------------------------- |
+| `npm run dev`     | Start the Vite dev server   |
+| `npm run build`   | Production build to `dist/` |
+| `npm run preview` | Serve the production build  |
+| `npm run lint`    | Run ESLint on the project   |
 
 ## Tech notes
 
