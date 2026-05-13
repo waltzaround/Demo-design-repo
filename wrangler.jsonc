@@ -2,6 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "demo-design-repo",
   "compatibility_date": "2026-05-12",
+  "workers_dev": true,
   "routes": [
     { "pattern": "todo.walt.online", "custom_domain": true }
   ],
